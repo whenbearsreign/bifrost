@@ -10,3 +10,5 @@ docs/.vitepress/cache
 personal.yml
 .github/workflows/docker-publish.yml
 personal2.yml
+
+.vs/
