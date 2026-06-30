@@ -6,12 +6,12 @@ services:
       args:
         GIT_COMMIT: abc1234
         APP_VERSION: 1.2.3
-    container_name: bifrost
+    container_name: bifrost-test
     restart: unless-stopped
     env_file:
       - .env
     environment:
-      BF_FLUXER_DOMAIN: ${BF_FLUXER_DOMAIN:-fluxer.app}
+      BF_FLUXER_DOMAIN: chat.relicfree.company # Change this to your domain www.example.com
       BF_FLUXER_API_BASE: ${BF_FLUXER_API_BASE:-}
       BF_FLUXER_WEB_BASE: ${BF_FLUXER_WEB_BASE:-}
     volumes:
