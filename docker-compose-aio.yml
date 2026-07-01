@@ -15,6 +15,9 @@ services:
             DB_NAME: bifrost
             DB_USER: bifrost_user
             DB_PASS: ${POSTGRES_PASSWORD}
+            BF_FLUXER_DOMAIN: ${BF_FLUXER_DOMAIN:-fluxer.app}
+            BF_FLUXER_API_BASE: ${BF_FLUXER_API_BASE:-}
+            BF_FLUXER_WEB_BASE: ${BF_FLUXER_WEB_BASE:-}
         volumes:
             - ./config:/config
         networks:

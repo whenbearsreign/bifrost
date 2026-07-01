@@ -25,7 +25,7 @@ export type WebhookAttachment = {
 export type WebhookMessageData = {
     content: string;
     username: string;
-    avatarURL: string;
+    avatarURL?: string;
     attachments?: WebhookAttachment[];
     embeds?: WebhookEmbed[];
 };
@@ -229,7 +229,7 @@ export class WebhookService {
                 {
                     content: data.content,
                     username: data.username,
-                    avatar_url: data.avatarURL,
+                    avatar_url: data.avatarURL || undefined,
                     files:
                         data.attachments?.map((attachment) => ({
                             url: attachment.url,

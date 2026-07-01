@@ -55,6 +55,43 @@ export const DISCORD_TOKEN = process.env.BF_DISCORD_TOKEN || '';
 export const FLUXER_APP_ID = process.env.BF_FLUXER_APP_ID || '';
 export const DISCORD_APP_ID = process.env.BF_DISCORD_APP_ID || '';
 
+function getCliArg(flag: string): string | null {
+    // Supports both `--flag=value` and `--flag value` forms
+    const eqArg = process.argv.find((arg) => arg.startsWith(`${flag}=`));
+    if (eqArg) return eqArg.slice(flag.length + 1);
+    const idx = process.argv.indexOf(flag);
+    if (idx !== -1 && process.argv[idx + 1]) return process.argv[idx + 1];
+    return null;
+}
+
+// Domain of the Fluxer instance to connect to.
+// Resolution order: --fluxer-domain CLI flag > BF_FLUXER_DOMAIN env var > default.
+// Self-hosted operators should set this to their instance domain (e.g. chat.example.com).
+export const FLUXER_DOMAIN =
+    getCliArg('--fluxer-domain') || process.env.BF_FLUXER_DOMAIN || 'fluxer.app';
+
+// Base URL for the Fluxer REST API and gateway discovery.
+// The hosted fluxer.app instance serves the API at api.fluxer.app, but the self-hosted
+// Docker Compose stack (see docs.fluxer.app/operator) serves it at <domain>/api.
+// Resolution order: --fluxer-api-base CLI flag > BF_FLUXER_API_BASE env var > derived default.
+export const FLUXER_API_BASE =
+    getCliArg('--fluxer-api-base') ||
+    process.env.BF_FLUXER_API_BASE ||
+    (FLUXER_DOMAIN === 'fluxer.app'
+        ? `https://api.${FLUXER_DOMAIN}`
+        : `https://${FLUXER_DOMAIN}/api`);
+
+// Base URL for the Fluxer web client, used in invite links and channel URLs.
+// The hosted fluxer.app instance uses the web.fluxer.app subdomain, but self-hosted
+// instances serve the web client at the root domain.
+// Resolution order: --fluxer-web-base CLI flag > BF_FLUXER_WEB_BASE env var > derived default.
+export const FLUXER_WEB_BASE =
+    getCliArg('--fluxer-web-base') ||
+    process.env.BF_FLUXER_WEB_BASE ||
+    (FLUXER_DOMAIN === 'fluxer.app'
+        ? `https://web.${FLUXER_DOMAIN}`
+        : `https://${FLUXER_DOMAIN}`);
+
 export const DISCORD_HEALTH_URL = process.env.BF_DISCORD_HEALTH_URL || null;
 export const FLUXER_HEALTH_URL = process.env.BF_FLUXER_HEALTH_URL || null;
 

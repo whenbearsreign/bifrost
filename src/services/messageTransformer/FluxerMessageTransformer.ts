@@ -5,6 +5,19 @@ import { breakMentions, sanitizeMentions } from '../../utils/sanitizeMentions';
 import { buildFluxerStickerUrl } from '../../utils/buildStickerUrl';
 import WebhookEmbed from '../WebhookEmbed';
 import { GeneralEmoji } from '../../utils/emojis';
+import { FLUXER_DOMAIN } from '../../utils/env';
+
+function buildFluxerAvatarURL(
+    userId: string,
+    avatarHash: string | null
+): string | undefined {
+    if (!avatarHash) return undefined;
+    if (FLUXER_DOMAIN === 'fluxer.app') {
+        const ext = avatarHash.startsWith('a_') ? 'gif' : 'png';
+        return `https://fluxerusercontent.com/avatars/${userId}/${avatarHash}.${ext}`;
+    }
+    return `https://${FLUXER_DOMAIN}/media/avatars/${userId}/${avatarHash}.webp?size=160`;
+}
 
 export default class FluxerMessageTransformer extends MessageTransformer<
     Message,
@@ -94,7 +107,7 @@ export default class FluxerMessageTransformer extends MessageTransformer<
         return {
             content: emojiReplacedContent,
             username: message.author.username,
-            avatarURL: message.author.avatarURL() || '',
+            avatarURL: buildFluxerAvatarURL(message.author.id, message.author.avatar),
             attachments: attachments,
             embeds,
         };

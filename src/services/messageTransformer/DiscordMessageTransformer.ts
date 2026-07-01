@@ -128,7 +128,7 @@ export default class DiscordMessageTransformer extends MessageTransformer<
         return {
             content: messageContent,
             username: message.author.username,
-            avatarURL: message.author.avatarURL() || '',
+            avatarURL: message.author.avatarURL() ?? undefined,
             attachments: attachments,
             embeds,
         };

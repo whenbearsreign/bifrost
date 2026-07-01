@@ -9,6 +9,7 @@ import { EmbedColors } from '../../../utils/embeds';
 import {
     DISCORD_APP_ID,
     FLUXER_APP_ID,
+    FLUXER_WEB_BASE,
     GIT_COMMIT,
     REPO_URL,
 } from '../../../utils/env';
@@ -50,7 +51,7 @@ export default class StatsDiscordCommandHandler extends DiscordCommandHandler {
         const dbStats = await this.dbStatsService.getStats();
 
         const perms = '536947712';
-        const inviteValue = `[Fluxer](${generateFluxerBotInviteLink(FLUXER_APP_ID, perms)}) | [Discord](${generateDiscordBotInviteLink(DISCORD_APP_ID, perms)})`;
+        const inviteValue = `[Fluxer](${generateFluxerBotInviteLink(FLUXER_APP_ID, perms, FLUXER_WEB_BASE)}) | [Discord](${generateDiscordBotInviteLink(DISCORD_APP_ID, perms)})`;
 
         const buildValue = GIT_COMMIT
             ? REPO_URL

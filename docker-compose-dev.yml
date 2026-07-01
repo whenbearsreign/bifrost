@@ -10,5 +10,9 @@ services:
     restart: unless-stopped
     env_file:
       - .env
+    environment:
+      BF_FLUXER_DOMAIN: ${BF_FLUXER_DOMAIN:-fluxer.app}   # # # Change this to your domain www.example.com
+      BF_FLUXER_API_BASE: ${BF_FLUXER_API_BASE:-}
+      BF_FLUXER_WEB_BASE: ${BF_FLUXER_WEB_BASE:-}
     volumes:
       - ./config:/config
