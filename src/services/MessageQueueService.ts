@@ -14,7 +14,7 @@ export type SerializableEmbed = ReturnType<WebhookEmbed['toPlainObject']>;
 export type SerializableWebhookMessageData = {
     content: string;
     username: string;
-    avatarURL: string;
+    avatarURL?: string;
     attachments?: WebhookAttachment[];
     embeds?: SerializableEmbed[];
 };
